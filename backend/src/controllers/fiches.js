@@ -27,7 +27,7 @@ exports.lire = asyncHandler(async (req, res) => {
 
 // POST /fiches — le visiteur crée SA fiche du mois
 exports.creer = asyncHandler(async (req, res) => {
-  const { mois } = z.object({ mois: z.string().regex(/^\d{4}-\d{2}$/) }).parse(req.body);
+  const { mois } = z.object({ mois: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/) }).parse(req.body);
   const fiche = await Fiche.create({
     visiteur: req.user.id, mois, etat: "CR",
     historiqueEtats: [{ etat: "CR", par: req.user.id }],
@@ -50,6 +50,7 @@ exports.majForfait = asyncHandler(async (req, res) => {
   if (fiche.etat !== "CR") throw new AppError("Fiche non modifiable", 409);
   fiche.lignesForfait = lignesForfait;
   await fiche.save();
+  await fiche.populate("visiteur", "nom prenom");
   res.json(fiche);
 });
 
@@ -68,6 +69,7 @@ exports.ajouterLigne = asyncHandler(async (req, res) => {
   if (fiche.etat !== "CR") throw new AppError("Fiche non modifiable", 409);
   fiche.lignesHorsForfait.push(ligne);
   await fiche.save();
+  await fiche.populate("visiteur", "nom prenom");
   res.status(201).json(fiche);
 });
 
@@ -81,6 +83,7 @@ exports.cloturer = asyncHandler(async (req, res) => {
   fiche.etat = "CL";
   fiche.historiqueEtats.push({ etat: "CL", par: req.user.id });
   await fiche.save();
+  await fiche.populate("visiteur", "nom prenom");
   res.json(fiche);
 });
 
@@ -93,5 +96,6 @@ exports.valider = asyncHandler(async (req, res) => {
   fiche.etat = "VA";
   fiche.historiqueEtats.push({ etat: "VA", par: req.user.id });
   await fiche.save();
+  await fiche.populate("visiteur", "nom prenom");
   res.json(fiche);
 });

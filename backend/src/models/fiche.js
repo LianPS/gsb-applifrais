@@ -23,7 +23,7 @@ const evenementSchema = new mongoose.Schema({
 
 const ficheSchema = new mongoose.Schema({
     visiteur: { type: mongoose.Schema.Types.ObjectId, ref: "Visiteur", required: true },
-    mois: { type: String, required: true, match: /^\d{4}-\d{2}$/ },
+    mois: { type: String, required: true, match: /^\d{4}-(0[1-9]|1[0-2])$/ },
     etat: { type: String, enum: ["CR", "CL", "VA", "MP", "RB"], default: "CR" },
     lignesForfait: [ligneForfaitSchema],
     lignesHorsForfait: [ligneHorsForfaitSchema],
