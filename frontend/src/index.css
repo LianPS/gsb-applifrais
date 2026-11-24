@@ -1,0 +1,11 @@
+body { font-family: system-ui, sans-serif; margin: 0; background: #f5f6f8; color: #222; }
+main, .login { max-width: 900px; margin: 24px auto; padding: 0 16px; }
+.barre { display: flex; gap: 16px; align-items: center; padding: 12px 16px; background: #1f3a5f; color: #fff; }
+.barre a { color: #fff; font-weight: bold; text-decoration: none; margin-right: auto; }
+.login { display: flex; flex-direction: column; gap: 12px; max-width: 320px; }
+label { display: flex; flex-direction: column; gap: 4px; margin: 6px 0; }
+input { padding: 6px 8px; border: 1px solid #bbb; border-radius: 4px; }
+button { padding: 6px 12px; border: 0; border-radius: 4px; background: #1f3a5f; color: #fff; cursor: pointer; margin: 4px 4px 4px 0; }
+table { width: 100%; border-collapse: collapse; background: #fff; margin-top: 12px; }
+th, td { padding: 8px; border-bottom: 1px solid #e3e3e3; text-align: left; }
+.erreur { color: #b00020; background: #fde7ea; padding: 8px; border-radius: 4px; }
