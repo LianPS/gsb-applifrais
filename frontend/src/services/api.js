@@ -16,7 +16,7 @@ async function http(path, options = {}) {
   const token = getToken();
   const res = await fetch(`${API_URL}${path}`, {
     headers: {
-      "Content-Type": "application/json",
+      ...(options.body instanceof FormData ? {} : { "Content-Type": "application/json" }), // ← MODIF 1
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
     ...options,
@@ -45,4 +45,12 @@ export const FichesAPI = {
     http(`/fiches/${id}/lignes`, { method: "POST", body: JSON.stringify(ligne) }),
   cloturer: (id) => http(`/fiches/${id}/cloturer`, { method: "PUT" }),
   valider: (id) => http(`/fiches/${id}/valider`, { method: "PUT" }),
+
+  // ← MODIF 2 : chapitre 7
+  analyser: (id, fichier) => {
+    const fd = new FormData();
+    fd.append("recu", fichier);
+    return http(`/fiches/${id}/analyse`, { method: "POST", body: fd });
+  },
+  justificatif: (id, cle) => http(`/fiches/${id}/justificatif?cle=${encodeURIComponent(cle)}`),
 };
