@@ -1,0 +1,12 @@
+services:
+  rustfs:
+    image: rustfs/rustfs:1.0.6
+    container_name: gsb-rustfs
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - gsb-rustfs-data:/data
+
+volumes:
+  gsb-rustfs-data:
